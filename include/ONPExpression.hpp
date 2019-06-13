@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <stack>
+#include <string>
 
 #include "../include/token.hpp"
 
@@ -22,7 +23,11 @@ namespace WSTI
  
             string inFixExpression;
             
-            stack<token>    outputStack;
-            stack<operationSymbol>      operationStack;
+            stack<token>            outputStack;
+            stack<operationSymbol>  operationStack;
+
+            stack<token>             inFixStack;
+
+            void tokenizeExpression();
     };
 }
