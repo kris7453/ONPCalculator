@@ -25,25 +25,25 @@ namespace WSTI
     {
         public:
 
-            token();
+            explicit token();
             token( int number);
             token( operationSymbol _operator);
             token( functionSymbol _function);
-            token( token &e );
+            token( const token &e );
             ~token();
 
             void setNumber( int number){ this->number = number; whichElement = 0;}
-            int getNumber(){ return number; }
+            int getNumber() const { return number; }
 
             void setOperator( operationSymbol _operator){ this->_operator = _operator; whichElement = 1;}
-            operationSymbol getOperator(){ return _operator; }
+            operationSymbol getOperator() const { return _operator; }
 
             void setFunction( functionSymbol _function){ this->_function = _function; whichElement = 2;}
-            functionSymbol getFunction(){ return _function; }
+            functionSymbol getFunction() const { return _function; }
             
-            bool isElementNumber(){ return (whichElement == 0);}
-            bool isElementOperator(){ return (whichElement == 1);}
-            bool isElementFunction(){ return (whichElement == 2);}
+            bool isElementNumber() const { return (whichElement == 0);}
+            bool isElementOperator() const { return (whichElement == 1);}
+            bool isElementFunction() const { return (whichElement == 2);}
 
         private:
 

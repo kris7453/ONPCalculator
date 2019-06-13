@@ -28,6 +28,11 @@ namespace WSTI
 
             stack<token>             inFixStack;
 
+            enum expressionException
+            {
+                bracketsParity
+            };
+
             void tokenizeExpression();
     };
 }

@@ -28,7 +28,7 @@ namespace WSTI
         setFunction( _function );
     }
 
-    token::token( token &e)
+    token::token( const token &e)
     {
         if (e.isElementNumber())
             this->setNumber( e.getNumber() );
