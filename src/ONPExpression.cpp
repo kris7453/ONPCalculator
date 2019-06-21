@@ -2,7 +2,7 @@
 
 namespace WSTI
 {
-    ONPExpression::ONPExpression()
+    ONPExpression::ONPExpression() : validExpression( false )
     {
     }
 
@@ -25,46 +25,63 @@ namespace WSTI
                 cout << "Wrong expression, brackets parity is incorrect!" << endl;
                 break;
             }
-        }
-        
+        }     
     }
 
     void ONPExpression::tokenizeExpression()
     {
         short bracketsParity = 0; // variable to check brackets parity, brackets parity have to be equal 0 at the function end
-        stack<token> tempStack;
+        queue<token> inFixQueue;
         string::const_iterator expressionEnd = this->inFixExpression.end();
 
         for ( string::const_iterator i = inFixExpression.begin(); i < expressionEnd; i++)
         {
             if( *i == ' ')  continue;
 
-            if ( *i >= '0' &&*i <= '9' )
+            if ( *i >= '0' && *i <= '9' )
             {
                 string number = "";
 
-                for (; ( *i >= '0' && *i <= '9' ) && i < expressionEnd; i++)
+                for (; (( *i >= '0' && *i <= '9' ) || *i == '.') && i < expressionEnd; i++)
                 {
                     number += *i;
                 }
 
-                tempStack.push( token(stoi(number)) );
+                inFixQueue.push( token(stod(number)) );
                 i--;
                 continue;
             }
 
             switch ( *i )
             {
-                case '(': tempStack.push( token(operationSymbol::leftBracket) ); bracketsParity++; break;
-                case '+': tempStack.push( token(operationSymbol::plus) ); break;
-                case '-': tempStack.push( token(operationSymbol::minus) ); break;
-                case ')': tempStack.push( token(operationSymbol::rightBracket) ); bracketsParity--; break;
-                case '*': tempStack.push( token(operationSymbol::multiple) ); break;
-                case '/': tempStack.push( token(operationSymbol::divide) ); break;
-                case '^': tempStack.push( token(operationSymbol::power) ); break;
+                case '(': inFixQueue.push( token(operationSymbol::leftBracket) ); bracketsParity++; break;
+                case '+': inFixQueue.push( token(operationSymbol::plus) ); break;
+                case '-': inFixQueue.push( token(operationSymbol::minus) ); break;
+                case ')': inFixQueue.push( token(operationSymbol::rightBracket) ); bracketsParity--; break;
+                case '*': inFixQueue.push( token(operationSymbol::multiple) ); break;
+                case '/': inFixQueue.push( token(operationSymbol::divide) ); break;
+                case '^': inFixQueue.push( token(operationSymbol::power) ); break;
             
                 default:
-                
+                {
+                    string funct = "";
+
+                    for (; *i != '(' && i < expressionEnd; i++)
+                        funct += *i;
+                    
+                    i--;
+
+                    try
+                    {
+                        inFixQueue.push( token( funct ));
+                    }
+                    catch(const std::exception& e)
+                    {
+                        std::cerr << e.what() << '\n';
+                        validExpression = false;
+                        return;
+                    }
+                }
                     break;
             }
         }
@@ -72,11 +89,37 @@ namespace WSTI
         if ( bracketsParity ) // bracketsParity <> 0
             throw expressionException::bracketsParity;
 
-
-        while( !tempStack.empty() )
-        {
-            inFixStack.push( tempStack.top() );
-            tempStack.pop();
-        }
+        validExpression = true;
     }
+
+    bool ONPExpression::isExpressionValid()
+    {
+        return  validExpression;
+    }
+
+    void ONPExpression::convertInFixToPostFix()
+    {
+        queue<token> input( inFixQueue );
+        queue<token> output;
+        stack<operationSymbol>  operationStack;
+
+        while( !input.empty() )
+        {
+            token t = input.front();
+            input.pop();
+
+            if( t.isElementNumber() )
+            {
+                output.push( t );
+                continue;
+            }
+
+            if( t.isElementOperator() )
+            {
+                
+            }
+        }
+
+    }
+
 }

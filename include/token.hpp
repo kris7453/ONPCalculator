@@ -26,14 +26,15 @@ namespace WSTI
         public:
 
             explicit token();
-            token( int number);
+            token( double number);
             token( operationSymbol _operator);
             token( functionSymbol _function);
+            token( std::string _function);
             token( const token &e );
             ~token();
 
-            void setNumber( int number){ this->number = number; whichElement = 0;}
-            int getNumber() const { return number; }
+            void setNumber( double number){ this->number = number; whichElement = 0;}
+            double getNumber() const { return number; }
 
             void setOperator( operationSymbol _operator){ this->_operator = _operator; whichElement = 1;}
             operationSymbol getOperator() const { return _operator; }
@@ -51,7 +52,7 @@ namespace WSTI
 
             union
             {
-                int             number;
+                double             number;
                 operationSymbol _operator;
                 functionSymbol  _function;
             };

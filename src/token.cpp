@@ -13,7 +13,7 @@ namespace WSTI
     {
     }
 
-    token::token( int number) 
+    token::token( double number) 
     {
         setNumber( number );
     }
@@ -26,6 +26,16 @@ namespace WSTI
     token::token( functionSymbol _function)
     {
         setFunction( _function );
+    }
+
+    token::token( std::string _function)
+    {
+        auto funIterator = functionsMap.find( _function );
+        
+        if( funIterator != functionsMap.end())
+            this->setFunction( funIterator->second );
+        else
+            throw std::invalid_argument("Unrecognized symbol " + _function );
     }
 
     token::token( const token &e)
