@@ -30,13 +30,16 @@ namespace WSTI
 
     void ONPExpression::printONPCalculate()
     {
-        
+        int step = 0;
+        auto input = queue<token>(ONPQueue);
+
+
+
     }
 
     void ONPExpression::tokenizeExpression()
     {
         short bracketsParity = 0; // variable to check brackets parity, brackets parity have to be equal 0 at the function end
-        
         string::const_iterator expressionEnd = this->inFixExpression.end();
 
         for ( string::const_iterator i = inFixExpression.begin(); i < expressionEnd; i++)
@@ -96,11 +99,6 @@ namespace WSTI
 
         validExpression = true;
         convertInFixToPostFix();
-    }
-
-    bool ONPExpression::isExpressionValid()
-    {
-        return  validExpression;
     }
 
     void ONPExpression::convertInFixToPostFix()
@@ -198,18 +196,18 @@ namespace WSTI
             operationStack.pop();
         }
 
-        postFixToString();
+        postFixExpression = parseTokenQueueToString( ONPQueue );
     }
 
-    void ONPExpression::postFixToString()
+    string ONPExpression::parseTokenQueueToString( const queue<token> &input)
     {
-        queue<token> input( ONPQueue );
+        queue<token> _input( input );
         std::stringstream postFixStream;
 
         do
         {
-            auto t = input.front();
-            input.pop();
+            auto t = _input.front();
+            _input.pop();
 
             if ( t.isElementNumber() )
             {
@@ -238,14 +236,13 @@ namespace WSTI
                 case functionSymbol::cos: postFixStream << "cos "; break;
                 case functionSymbol::tan: postFixStream << "tan "; break;
             }
-        } while ( !input.empty() );
+        } while ( !_input.empty() );
 
-        postFixExpression = postFixStream.str();
+        return postFixStream.str();
     }
 
     void ONPExpression::calculateONP()
     {
 
     }
-
 }

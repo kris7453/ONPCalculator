@@ -42,7 +42,8 @@ namespace WSTI
 
             void tokenizeExpression();
             void convertInFixToPostFix();
-            void postFixToString();
             void calculateONP();
+
+            string parseTokenQueueToString( const queue<token> &input);
     };
 }
