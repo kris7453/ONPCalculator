@@ -20,6 +20,13 @@ namespace WSTI
         cos,
         tan
     };
+
+    enum associativity
+    {
+        left,
+        right,
+        none
+    };
         
     class token
     {
@@ -33,6 +40,7 @@ namespace WSTI
             token( const token &e );
             ~token();
 
+
             void setNumber( double number){ this->number = number; whichElement = 0;}
             double getNumber() const { return number; }
 
@@ -44,7 +52,12 @@ namespace WSTI
             
             bool isElementNumber() const { return (whichElement == 0);}
             bool isElementOperator() const { return (whichElement == 1);}
+            bool isOperatorBracket() const;
             bool isElementFunction() const { return (whichElement == 2);}
+
+            short getPriority() const;
+            associativity getAssociativity() const;
+
 
         private:
 

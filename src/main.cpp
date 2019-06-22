@@ -5,12 +5,10 @@
 int main()
 {
     WSTI::ONPExpression express;
-    std::string strExpress = "sin(2)+34.38+4*2/(512-495)^2";
+    std::string strExpress = "3*(sin (2) +sin( 6))^ 2";
 
     express.setInFixExpression( strExpress );
-
-
-    std::cout << "Hello Easy C++ project!" << std::endl;
+    std::cout << express.getPostFixExpression() << std::endl;
 
     return 0;
 }

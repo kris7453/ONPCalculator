@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 #include <queue>
 #include <stack>
 #include <string>
@@ -19,16 +21,19 @@ namespace WSTI
             ~ONPExpression();
 
             void setInFixExpression( string expression);
-            bool isExpressionValid();
+            bool isExpressionValid(){ return validExpression;}
+            string getPostFixExpression(){ return postFixExpression;}
+            void printONPCalculate();
 
         private:
  
             string inFixExpression;
+            string postFixExpression;
 
             bool validExpression;
             
             queue<token>    ONPQueue;
-            queue<token>    inFixQueue;
+            deque<token>    inFixDeque;
 
             enum expressionException
             {
@@ -37,5 +42,7 @@ namespace WSTI
 
             void tokenizeExpression();
             void convertInFixToPostFix();
+            void postFixToString();
+            void calculateONP();
     };
 }

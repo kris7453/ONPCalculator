@@ -51,4 +51,64 @@ namespace WSTI
     token::~token()
     {
     }
+
+    bool token::isOperatorBracket() const
+    {
+        if ( isElementOperator() )
+            return ( ( _operator == operationSymbol:: leftBracket || _operator == operationSymbol::rightBracket )
+            ?   true
+            :   false);
+    }
+
+    short token::getPriority() const
+    {
+        if ( this->isElementFunction() )
+            return 3;
+
+        if ( this->isElementOperator() )
+        {
+            switch ( this->_operator )
+            {
+                case operationSymbol::plus:
+                case operationSymbol::minus:
+
+                    return 1;
+
+                case operationSymbol::multiple:
+                case operationSymbol::divide:
+
+                    return 2;
+
+                case operationSymbol::power:
+
+                    return 3;
+            }
+        }
+
+        //For number
+        return 0;
+    }
+
+    associativity token::getAssociativity() const
+    {
+        if ( this->isElementOperator() )
+        {
+            switch ( this->_operator )
+            {
+                case operationSymbol::plus:
+                case operationSymbol::minus:
+                case operationSymbol::multiple:
+                case operationSymbol::divide:
+                
+                    return associativity::left;
+                
+                case operationSymbol::power:
+
+                    return associativity::right;
+            }
+        }
+
+        return associativity::none;
+    }
+
 }
