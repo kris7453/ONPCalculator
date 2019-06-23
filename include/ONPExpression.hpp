@@ -6,6 +6,7 @@
 #include <queue>
 #include <stack>
 #include <string>
+#include <math.h>
 
 #include "../include/token.hpp"
 
@@ -42,8 +43,9 @@ namespace WSTI
 
             void tokenizeExpression();
             void convertInFixToPostFix();
-            void calculateONP();
 
             string parseTokenQueueToString( const queue<token> &input);
+            string parseTokenStackToString( const stack<token> &input);
+
     };
 }

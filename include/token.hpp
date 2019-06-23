@@ -1,5 +1,7 @@
 #pragma once
 #include <map>
+#include <sstream>
+#include <iomanip>
 
 namespace WSTI
 {
@@ -18,7 +20,17 @@ namespace WSTI
     {
         sin,
         cos,
-        tan
+        tan,
+        sqrt,
+        cbrt,
+        log,
+        log2,
+        log10,
+        exp,
+        exp2,
+        floor,
+        ceil,
+        round
     };
 
     enum associativity
@@ -57,6 +69,8 @@ namespace WSTI
 
             short getPriority() const;
             associativity getAssociativity() const;
+
+            friend std::ostream& operator<<( std::ostream &stream, const token& _token );
 
 
         private:

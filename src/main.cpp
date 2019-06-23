@@ -5,10 +5,22 @@
 int main()
 {
     WSTI::ONPExpression express;
-    std::string strExpress = "3*(sin (2) +sin( 6))^ 2";
+    std::string strExpress;
 
-    express.setInFixExpression( strExpress );
-    std::cout << express.getPostFixExpression() << std::endl;
+    std::cout << " Enter in-fix expression:" << std::endl;
+    getline( std::cin, strExpress);
+
+    while ( strExpress != "q" )
+    {
+        express.setInFixExpression( strExpress );
+        std::cout << std::endl << "ONP: " << express.getPostFixExpression() << std::endl << std::endl;
+        express.printONPCalculate();
+        cin.ignore();
+        getchar();
+        system("clear");
+        std::cout << " Enter in-fix expression:" << std::endl;
+        getline( std::cin, strExpress);
+    } 
 
     return 0;
 }

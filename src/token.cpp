@@ -6,7 +6,17 @@ namespace WSTI
     {
         {"sin", functionSymbol::sin},
         {"cos", functionSymbol::cos},
-        {"tan", functionSymbol::tan}
+        {"tan", functionSymbol::tan},
+        {"sqrt", functionSymbol::sqrt},
+        {"cbrt", functionSymbol::cbrt},
+        {"log", functionSymbol::log},
+        {"log2", functionSymbol::log2},
+        {"log10", functionSymbol::log10},
+        {"exp", functionSymbol::exp},
+        {"exp2", functionSymbol::exp2},
+        {"floor", functionSymbol::floor},
+        {"ceil", functionSymbol::ceil},
+        {"round", functionSymbol::round}
     };
 
     token::token()
@@ -111,4 +121,42 @@ namespace WSTI
         return associativity::none;
     }
 
+    std::ostream& operator<<( std::ostream& stream, const token& _token )
+    {
+        if ( _token.isElementNumber() )
+            stream << std::fixed << std::setprecision(2) << _token.getNumber();
+        else
+        if ( _token.isElementOperator() )
+        {
+            switch ( _token.getOperator() )
+            {               
+                case operationSymbol::leftBracket: stream << "("; break;
+                case operationSymbol::plus: stream << "+"; break;
+                case operationSymbol::minus: stream << "-"; break;
+                case operationSymbol::rightBracket: stream << ")"; break;
+                case operationSymbol::multiple: stream << "*"; break;
+                case operationSymbol::divide: stream << "/"; break;
+                case operationSymbol::power: stream << "^"; break;
+            }
+        }
+        else
+        switch ( _token.getFunction() )
+        {
+            case functionSymbol::sin: stream << "sin"; break;
+            case functionSymbol::cos: stream << "cos"; break;
+            case functionSymbol::tan: stream << "tan"; break;
+            case functionSymbol::sqrt: stream << "sqrt"; break;
+            case functionSymbol::cbrt: stream << "cbrt"; break;
+            case functionSymbol::log: stream << "log"; break;
+            case functionSymbol::log2: stream << "log2"; break;
+            case functionSymbol::log10: stream << "log10"; break;
+            case functionSymbol::exp: stream << "exp"; break;
+            case functionSymbol::exp2: stream << "exp2"; break;
+            case functionSymbol::floor: stream << "floor"; break;
+            case functionSymbol::ceil: stream << "ceil"; break;
+            case functionSymbol::round: stream << "round"; break;
+        }
+
+        return stream;
+    }
 }
